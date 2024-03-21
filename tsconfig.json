@@ -8,7 +8,7 @@
     },
     "include": [
         "./labs/**/*.ts"
-    ],
+, "labs/lab02/main.ts"    ],
     "exclude": [
         "node_modules",
         "dist"

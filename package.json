@@ -12,5 +12,9 @@
   "devDependencies": {
     "@types/node": "^20.11.26",
     "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "aa-sqlite": "^1.0.29",
+    "sqlite3": "^5.1.7"
   }
 }

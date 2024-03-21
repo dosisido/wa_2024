@@ -1,4 +1,4 @@
-class Film{
+class Film01{
     id: number;
     title: string;
     favorite: boolean;
@@ -28,7 +28,7 @@ class Film{
     }
 }
 
-class FilmLibrary{
+class FilmLibrary01{
     films: Film[] = [];
 
     constructor(){}
