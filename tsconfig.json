@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "strict": true,
+        "esModuleInterop": true,
+        "lib": ["ESNext.Array", "DOM", "ESNext"],
+        "outDir": "./dist"
+    },
+    "include": [
+        "./labs/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

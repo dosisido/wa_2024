@@ -1,0 +1,16 @@
+{
+  "name": "wa_2024",
+  "version": "1.0.0",
+  "description": "web application's laboratories folder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "tsc"
+  },
+  "author": "dosisido",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.11.26",
+    "typescript": "^5.4.2"
+  }
+}
