@@ -14,7 +14,10 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
-    "aa-sqlite": "^1.0.29",
+    "@types/sqlite3": "^3.1.11",
+    "dayjs": "^1.11.10",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
 }

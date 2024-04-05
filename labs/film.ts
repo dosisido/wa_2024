@@ -1,12 +1,12 @@
 export default class Film{
-    id: number;
+    id: number | undefined;
     title: string;
     favorite: boolean;
     date?: Date;
     rating?: number;
 
     constructor(
-        id: number,
+        id: number | undefined,
         title: string,
         favorite: boolean = false,
         date?: Date,
