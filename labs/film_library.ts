@@ -1,5 +1,6 @@
 import Film from './film';
 import { open, debugMode } from './db';
+import SQL from 'sql-template-strings';
 
 export default class FilmLibrary{
     films: Film[] = [];
@@ -47,7 +48,7 @@ export default class FilmLibrary{
         return this.films.filter(film => film.rating !== undefined);
     }
 
-    static async loadFromDB(): Promise<Film[]>{
+    static async getAll(): Promise<Film[]>{
         const db = await open();
         const result = await db.all("SELECT * FROM films");
         await db.close();
@@ -57,7 +58,18 @@ export default class FilmLibrary{
         return result;
     }
 
-    static async getFavoriteeDB(): Promise<Film[]>{
+    static async getById(id: number | undefined): Promise<Film | undefined>{
+        if (id === undefined) return undefined;
+        const db = await open();
+        const result = await db.get(SQL`SELECT * FROM films WHERE id = ${id}`);
+        db.close();
+        if(result){
+            return new Film(result.id, result.title, result.favorite, result.date, result.rating);
+        }
+        return undefined;
+    }
+
+    static async getFavoriteDB(): Promise<Film[]>{
         const db = await open();
         const result = await db.all("SELECT * FROM films WHERE favorite = ?", [1]);
         db.close();
@@ -109,21 +121,49 @@ export default class FilmLibrary{
         return result;
     }
 
-    static async addFilmToDB(film: Film){
+    getByDateRange(start: Date, end: Date) : Film[]{
+        return this.films.filter(film => {
+            if(film.date){
+                return film.date >= start && film.date <= end;
+            }
+            return false;
+        });
+    }
+
+    getByWatchDate(date: Date | null) : Film[]{
+        return this.films.filter(film => {
+            if(film.date){
+                return film.date === date;
+            }
+            return false;
+        });
+    }
+
+    static async save(film: Film){
         const db = await open();
         const params = {
+            "$id": film.id,
             "$title": film.title,
             "$favorite": film.favorite,
             "$watchdate": film.date,
             "$rating": film.rating
         }
-        const res = await db.run(`
-            INSERT INTO films
-                (title, favorite, watchdate, rating)
-            VALUES ($title, $favorite, $watchdate, $rating)`,
-            params
-        );
-        film.id = res.lastID;
+        if(!film.id){
+            const res = await db.run(`
+                INSERT INTO films
+                    (title, favorite, watchdate, rating)
+                VALUES ($title, $favorite, $watchdate, $rating)`,
+                params
+            );
+            film.id = res.lastID;
+        }else{
+            await db.run(`
+                UPDATE films
+                SET title = $title, favorite = $favorite, watchdate = $watchdate, rating = $rating
+                WHERE id = $id`,
+                params
+            );
+        }
         db.close();
     }
 
@@ -145,4 +185,5 @@ export default class FilmLibrary{
         db.close();
         console.log(`Watch date was reset for ${res.changes} films`);
     }
+
 }

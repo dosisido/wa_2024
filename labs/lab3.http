@@ -1,0 +1,20 @@
+@baseURL = http://localhost:3000
+
+GET {{baseURL}}
+
+###
+
+GET {{baseURL}}/api/films/all
+
+###
+
+GET {{baseURL}}/api/films/{{$randomInt 1 7}}
+
+###
+
+POST {{baseURL}}/api/films/1/update
+content-type: application/json
+
+{
+    "title": "Pulp Fiction"
+}

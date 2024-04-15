@@ -1,3 +1,5 @@
+import FilmLibrary from "./film_library";
+
 export default class Film{
     id: number | undefined;
     title: string;
@@ -21,6 +23,10 @@ export default class Film{
 
     print(){
         console.log(`Id: ${this.id}, Title: ${this.title}, Favorite: ${this.favorite}, Watch Date: ${this.date || '<not defined>'}, Score: ${this.rating || '<not defined>'}`);
+    }
+
+    async save(){
+        await FilmLibrary.save(this);
     }
 
     static printAll(films: Film[]){
